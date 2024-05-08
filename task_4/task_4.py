@@ -6,7 +6,7 @@ def input_error(func):
         except ValueError:
             return "Enter the argument for the command."
         except KeyError:
-            return "KeyError."
+            return "KeyError. Try using a valid key."
         except IndexError:
             return "Enter the argument for the command."
     return inner
@@ -48,59 +48,64 @@ def show_phone(args, contacts):
 @input_error
 def show_all(contacts):
     return_str = ""
-    #max_name_len = len(max(contacts.keys(), key=len))
+    # max_name_len = len(max(contacts.keys(), key=len))
     for k, v in contacts.items():
         return_str += f"{k:>15}: {v:<15}\n"
     return return_str
-    #return '\n'.join(map('\t'.join, contacts.items()))
+    # return '\n'.join(map('\t'.join, contacts.items()))
 
-def help():
+
+def help_info():
     return """
-        help - to show this information
-        add [ім'я] [номер телефону]
-        change [ім'я] [новий номер телефону]
-        phone [ім'я]
-        all
+        help                                    - to show this information
+        hello                                   - to show the greeting
+        add [ім'я] [номер телефону]             - to add contact
+        change [ім'я] [новий номер телефону]    - to change contact phone number
+        phone [ім'я]                            - to show contact phone number
+        all                                     - to show list of all contacts
         close
         exit
         """
+
 
 def main():
     contacts = {}
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
-
         command, *args = parse_input(user_input)
-        command = command.lower()
+
         if command in ["close", "exit"]:
             print("Good bye!")
             break
+
         elif command == "hello":
             print("How can I help you?")
 
-        #> add [ім'я] [номер телефону]
+        # > add [ім'я] [номер телефону]
         elif command == "add":
             print(add_contact(args, contacts))
 
-        #> change [ім'я] [новий номер телефону]
+        # > change [ім'я] [новий номер телефону]
         elif command == "change":
             print(change_contact(args, contacts))
 
-        #> phone [ім'я]
+        # > phone [ім'я]
         elif command == "phone":
             print(show_phone(args, contacts))
 
-        #> all
+        # > all
         elif command == "all":
             print(show_all(contacts))
 
-        #> help
+        # > help_info
         elif command == "help":
-            print(help())
+            print(help_info())
+
         else:
             print("Enter valid command!")
-            print(help())
+            print(help_info())
+
 
 if __name__ == "__main__":
     main()

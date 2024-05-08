@@ -3,6 +3,7 @@ from pathlib import Path
 from collections import defaultdict
 
 
+# Function to parse log lines.
 def parse_log_line(line: str) -> dict:
     try:
         data, time, level, message = line.strip().split(' ', 3)
@@ -13,6 +14,7 @@ def parse_log_line(line: str) -> dict:
         print(f'{e} with line: {line}')
 
 
+# Function to download logs from a file.
 def load_logs(file_path: str) -> list:
     log_list = []
     try:
@@ -24,11 +26,12 @@ def load_logs(file_path: str) -> list:
     return log_list.copy()
 
 
-# To create a list with all logs filtered by level.
+# Function to create a list with all logs filtered by level.
 def filter_logs_by_level(logs: list, level: str) -> list:
     return list(filter(lambda elem: elem['level'] == level.upper(), logs))
 
 
+# Function to count records by logging level.
 def count_logs_by_level(logs: list) -> dict:
     count_dict = defaultdict(int)
     for elem in logs:
@@ -37,12 +40,14 @@ def count_logs_by_level(logs: list) -> dict:
     # return {i: len(filter_logs_by_level(logs, i)) for i in ['INFO', 'WARNING', 'ERROR', 'DEBUG']}
 
 
+# Function that formats and displays the results.
 def display_log_counts(counts: dict):
     print('Рівень логування | Кількість\n-----------------|----------')
     for level in counts.keys():
         print(f'{level:<16} | {counts.get(level):<10}')
 
 
+# Function that formats and displays detailed results by level.
 def display_logs_by_level(logs: list, level: str):
     print(f"\nДеталі логів для рівня '{level.upper()}':")
     for element in filter_logs_by_level(logs, level):
@@ -55,8 +60,8 @@ def main(logfile: str, level=""):
         logs = load_logs(logfile)
         if logs:
             display_log_counts(count_logs_by_level(logs))
-        if level:
-            display_logs_by_level(logs, level)
+            if level:
+                display_logs_by_level(logs, level)
 
 
 if __name__ == '__main__':

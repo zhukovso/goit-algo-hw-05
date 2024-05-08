@@ -1,5 +1,6 @@
 def caching_fibonacci():
-    cache={}
+    cache = {}
+
     def fibonacci(n):
         if n < 0:
             raise ValueError
@@ -11,6 +12,7 @@ def caching_fibonacci():
         return cache[n] 
     return fibonacci
 
+
 def main():
     # Отримуємо функцію fibonacci
     fib = caching_fibonacci()
@@ -18,6 +20,8 @@ def main():
     # Використовуємо функцію fibonacci для обчислення чисел Фібоначчі
     print(fib(10))  # Виведе 55
     print(fib(15))  # Виведе 610
+    print(fib(6))   # Виведе 8
+
 
 if __name__ == '__main__':
     main()
